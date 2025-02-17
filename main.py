@@ -1,6 +1,8 @@
 import sys
 import os
 import re
+import numpy as np
+import random
 
 from module import *
 
@@ -8,58 +10,122 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
 
+        self.rangeMin = -5
+        self.rangeMax = 5
+
+        self.points = []
+
+
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
 
+        self.figure = Figure()
+        self.figure.subplots_adjust(left=0.07, right=0.95, bottom=0.07, top=0.95)
+        self.canvas = FigureCanvas(self.figure)
+
+        self.ax = self.figure.add_subplot(111)
+
+        self.ui.layout_graphic.addWidget(self.canvas)
+        self.ui.button_generate_points.clicked.connect(self.click_point_generate)
+        self.ui.button_insert_points.clicked.connect(self.click_insert_point)
+        self.canvas.mpl_connect("button_press_event", self.click_insert_point_mouse)
+        self.ui.slider_weight_01.valueChanged.connect(self.change_slider_weight_01)
+        self.ui.slider_weight_02.valueChanged.connect(self.change_slider_weight_02)
+        self.ui.slider_bias.valueChanged.connect(self.change_slider_bias)
+
+        self.init_plot()
+        self.init_sliders()
         self.show()
 
-    def dataGrafic(self):
-        plt
+    @Slot()
+    def click_point_generate(self):
+        quantity = int(self.ui.input_quantity.toPlainText())
 
+        self.points.clear()
+        self.points = self.point_generate(quantity, self.rangeMin, self.rangeMax)
+        self.update_plot()
+
+    @Slot()
+    def click_insert_point(self):
+        x = int(self.ui.input_coord_x.toPlainText())
+        y = int(self.ui.input_coord_y.toPlainText())
+
+        self.ui.input_coord_x.setText("")
+        self.ui.input_coord_y.setText("")
+
+        self.points.append((x, y))
+
+        self.update_plot()
+
+    def click_insert_point_mouse(self, event):
+        if event.xdata is not None and event.ydata is not None:
+            coord = (event.xdata, event.ydata)
+            self.points.append(coord)
+
+            self.update_plot()
     
-    # def paintEvent(self, event):
-    #     """ Dibuja los ejes y los puntos en el plano cartesiano """
-    #     painter = QPainter(self)
-    #     painter.setRenderHint(QPainter.Antialiasing)
+    @Slot()
+    def change_slider_weight_01(self, value):
+        decimal_value = value / 10.0
+        self.ui.label_weight_01.setText(str(decimal_value))
 
-    #     # Dibujar ejes
-    #     width = self.width()
-    #     height = self.height()
-    #     center_x = width // 2
-    #     center_y = height // 2
+    @Slot()
+    def change_slider_weight_02(self, value):
+        decimal_value = value / 10.0
+        self.ui.label_weight_02.setText(str(decimal_value))
 
-    #     pen = QPen(Qt.black, 2)
-    #     painter.setPen(pen)
-    #     painter.drawLine(0, center_y, width, center_y)  # Eje X
-    #     painter.drawLine(center_x, 0, center_x, height)  # Eje Y
+    @Slot()
+    def change_slider_bias(self, value):
+        decimal_value = value / 10.0
+        self.ui.label_bias.setText(str(decimal_value))
 
+    def point_generate(self, quantity, lower_limit, upper_limit):
+        x = np.random.randint(lower_limit, upper_limit + 1, size = quantity)
+        y = np.random.randint(lower_limit, upper_limit + 1, size = quantity)
+
+        return list(zip(x, y))
+
+    def init_plot(self):
+        self.ax.set_xlim(self.rangeMin, self.rangeMax)
+        self.ax.set_ylim(self.rangeMin, self.rangeMax)
+        self.ax.set_aspect('equal')
+
+        self.ax.spines["left"].set_position("zero")
+        self.ax.spines["bottom"].set_position("zero")
+        self.ax.spines["right"].set_color("none")
+        self.ax.spines["top"].set_color("none")
+
+        self.ax.grid(True, linestyle="--", linewidth=0.5)
+
+        self.ax.set_xticks(np.arange(self.rangeMin, self.rangeMax + 1, 1))
+        self.ax.set_yticks(np.arange(self.rangeMin, self.rangeMax + 1, 1))
     
-    # def mousePressEvent(self, event: QMouseEvent):
-    #     """ Captura la posición del clic y la almacena """
-    #     if event.button() == Qt.LeftButton:
+    def update_plot(self):
+        self.ax.clear()
+        self.init_plot()
 
-    #         # Objeto de tipo QPoint
-    #         print(f"({event.position().toPoint()})")
-    #         self.update()
+        if self.points:
+            x_data, y_data = zip(*self.points)
+            self.ax.plot(x_data, y_data, 'o', color='black', markersize=4)  
 
-    # def mousePressEvent(self, event):
-    #     if event.button() == Qt.LeftButton:
-    #         widget_width = self.width()
-    #         widget_height = self.height()
+        # for point in self.points:
+        #     self.ax.scatter(point[0], point[1], marker="o", color="r", s=50)
 
-    #         # Centro del widget es el (0,0) en el sistema cartesiano
-    #         center_x = widget_width // 2
-    #         center_y = widget_height // 2
+        self.canvas.draw_idle()
 
-    #         # Obtener coordenadas del clic
-    #         click_x = event.position().toPoint().x()
-    #         click_y = event.position().toPoint().y()
+    def init_sliders(self):
+        rangeMin = -5
+        rangeMax = 5
 
-    #         # Convertir a coordenadas cartesianas
-    #         cart_x = click_x - center_x
-    #         cart_y = -(click_y - center_y)  # Invertimos Y porque en Qt Y crece hacia abajo
+        self.ui.slider_weight_01.setRange(rangeMin * 10, rangeMax * 10)
+        self.ui.slider_weight_01.setValue(0)
 
-    #         print(f"Coordenada en el sistema cartesiano: ({cart_x}, {cart_y})")
+        self.ui.slider_weight_02.setRange(rangeMin * 10, rangeMax * 10)
+        self.ui.slider_weight_02.setValue(0)
+
+        self.ui.slider_bias.setRange(rangeMin * 10, rangeMax * 10)
+        self.ui.slider_bias.setValue(0)
+
 
 if __name__ == "__main__":
     app = QApplication(sys.argv)
