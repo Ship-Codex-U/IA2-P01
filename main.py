@@ -73,10 +73,17 @@ class MainWindow(QMainWindow):
             coord = (event.xdata, event.ydata)
             self.points.append(coord)
 
-            # self.ax.plot(coord[0], coord[1], 'o', color='blue', markersize=4) 
-            # self.canvas.draw_idle()
+            weight_01 = self.ui.slider_weight_01.value() / 10.0
+            weight_02 = self.ui.slider_weight_02.value() / 10.0
+            bias = self.ui.slider_bias.value() / 10.0
 
-            self.update_plot()
+            perceptron = Perceptron(weight_01, weight_02, bias)
+
+            self.ax.plot(coord[0], coord[1], 'o', color='blue', markersize=4)
+            self.ax.annotate(f'({perceptron.predict(coord[0], coord[1])})', (coord[0], coord[1]), textcoords="offset points", xytext=(0,5), ha='center')
+            self.canvas.draw_idle()
+
+            #self.update_plot()
     
     @Slot()
     def change_slider_value(self, value):
