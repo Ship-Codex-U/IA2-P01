@@ -66,7 +66,7 @@ color: rgb(31, 31, 31);
          <property name="frameShadow">
           <enum>QFrame::Shadow::Raised</enum>
          </property>
-         <layout class="QVBoxLayout" name="verticalLayout_2">
+         <layout class="QVBoxLayout" name="verticalLayout_3">
           <item>
            <widget class="QLabel" name="label">
             <property name="font">
@@ -97,10 +97,7 @@ color: rgb(31, 31, 31);
            </spacer>
           </item>
           <item>
-           <layout class="QVBoxLayout" name="verticalLayout_3" stretch="0,0,0">
-            <property name="spacing">
-             <number>12</number>
-            </property>
+           <layout class="QVBoxLayout" name="verticalLayout_2">
             <item>
              <widget class="QLabel" name="label_10">
               <property name="font">
@@ -200,7 +197,7 @@ color: rgb(31, 31, 31);
              </layout>
             </item>
             <item>
-             <layout class="QHBoxLayout" name="horizontalLayout_3">
+             <layout class="QHBoxLayout" name="horizontalLayout_3" stretch="0,0,0">
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_4">
                 <item>
@@ -233,6 +230,26 @@ color: rgb(31, 31, 31);
               <item>
                <layout class="QVBoxLayout" name="verticalLayout_5">
                 <item>
+                 <widget class="QPushButton" name="button_clean">
+                  <property name="minimumSize">
+                   <size>
+                    <width>0</width>
+                    <height>40</height>
+                   </size>
+                  </property>
+                  <property name="styleSheet">
+                   <string notr="true">background-color: rgb(0, 87, 111);</string>
+                  </property>
+                  <property name="text">
+                   <string>Limpiar</string>
+                  </property>
+                 </widget>
+                </item>
+               </layout>
+              </item>
+              <item>
+               <layout class="QVBoxLayout" name="verticalLayout_14">
+                <item>
                  <widget class="QPushButton" name="button_generate_points">
                   <property name="minimumSize">
                    <size>
@@ -244,7 +261,8 @@ color: rgb(31, 31, 31);
                    <string notr="true">background-color: rgb(0, 87, 111);</string>
                   </property>
                   <property name="text">
-                   <string>Generar Aleatoriamente</string>
+                   <string>Generar 
+Aleatoriamente</string>
                   </property>
                  </widget>
                 </item>

@@ -58,8 +58,8 @@ class Ui_MainWindow(object):
         self.frame_2.setStyleSheet(u"background-color: rgb(10, 134, 169);")
         self.frame_2.setFrameShape(QFrame.Shape.StyledPanel)
         self.frame_2.setFrameShadow(QFrame.Shadow.Raised)
-        self.verticalLayout_2 = QVBoxLayout(self.frame_2)
-        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
+        self.verticalLayout_3 = QVBoxLayout(self.frame_2)
+        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
         self.label = QLabel(self.frame_2)
         self.label.setObjectName(u"label")
         font = QFont()
@@ -68,15 +68,14 @@ class Ui_MainWindow(object):
         self.label.setFont(font)
         self.label.setAlignment(Qt.AlignmentFlag.AlignCenter)
 
-        self.verticalLayout_2.addWidget(self.label)
+        self.verticalLayout_3.addWidget(self.label)
 
         self.verticalSpacer = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_2.addItem(self.verticalSpacer)
+        self.verticalLayout_3.addItem(self.verticalSpacer)
 
-        self.verticalLayout_3 = QVBoxLayout()
-        self.verticalLayout_3.setSpacing(12)
-        self.verticalLayout_3.setObjectName(u"verticalLayout_3")
+        self.verticalLayout_2 = QVBoxLayout()
+        self.verticalLayout_2.setObjectName(u"verticalLayout_2")
         self.label_10 = QLabel(self.frame_2)
         self.label_10.setObjectName(u"label_10")
         font1 = QFont()
@@ -84,7 +83,7 @@ class Ui_MainWindow(object):
         font1.setBold(True)
         self.label_10.setFont(font1)
 
-        self.verticalLayout_3.addWidget(self.label_10)
+        self.verticalLayout_2.addWidget(self.label_10)
 
         self.horizontalLayout_4 = QHBoxLayout()
         self.horizontalLayout_4.setObjectName(u"horizontalLayout_4")
@@ -143,7 +142,7 @@ class Ui_MainWindow(object):
         self.horizontalLayout_4.addLayout(self.verticalLayout_9)
 
 
-        self.verticalLayout_3.addLayout(self.horizontalLayout_4)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_4)
 
         self.horizontalLayout_3 = QHBoxLayout()
         self.horizontalLayout_3.setObjectName(u"horizontalLayout_3")
@@ -163,25 +162,37 @@ class Ui_MainWindow(object):
 
         self.verticalLayout_5 = QVBoxLayout()
         self.verticalLayout_5.setObjectName(u"verticalLayout_5")
+        self.button_clean = QPushButton(self.frame_2)
+        self.button_clean.setObjectName(u"button_clean")
+        self.button_clean.setMinimumSize(QSize(0, 40))
+        self.button_clean.setStyleSheet(u"background-color: rgb(0, 87, 111);")
+
+        self.verticalLayout_5.addWidget(self.button_clean)
+
+
+        self.horizontalLayout_3.addLayout(self.verticalLayout_5)
+
+        self.verticalLayout_14 = QVBoxLayout()
+        self.verticalLayout_14.setObjectName(u"verticalLayout_14")
         self.button_generate_points = QPushButton(self.frame_2)
         self.button_generate_points.setObjectName(u"button_generate_points")
         self.button_generate_points.setMinimumSize(QSize(0, 40))
         self.button_generate_points.setStyleSheet(u"background-color: rgb(0, 87, 111);")
 
-        self.verticalLayout_5.addWidget(self.button_generate_points)
+        self.verticalLayout_14.addWidget(self.button_generate_points)
 
 
-        self.horizontalLayout_3.addLayout(self.verticalLayout_5)
+        self.horizontalLayout_3.addLayout(self.verticalLayout_14)
 
 
-        self.verticalLayout_3.addLayout(self.horizontalLayout_3)
+        self.verticalLayout_2.addLayout(self.horizontalLayout_3)
 
 
-        self.verticalLayout_2.addLayout(self.verticalLayout_3)
+        self.verticalLayout_3.addLayout(self.verticalLayout_2)
 
         self.verticalSpacer_3 = QSpacerItem(20, 80, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Minimum)
 
-        self.verticalLayout_2.addItem(self.verticalSpacer_3)
+        self.verticalLayout_3.addItem(self.verticalSpacer_3)
 
         self.v3 = QVBoxLayout()
         self.v3.setSpacing(12)
@@ -263,11 +274,11 @@ class Ui_MainWindow(object):
         self.v3.addLayout(self.verticalLayout_11)
 
 
-        self.verticalLayout_2.addLayout(self.v3)
+        self.verticalLayout_3.addLayout(self.v3)
 
         self.verticalSpacer_2 = QSpacerItem(20, 40, QSizePolicy.Policy.Minimum, QSizePolicy.Policy.Expanding)
 
-        self.verticalLayout_2.addItem(self.verticalSpacer_2)
+        self.verticalLayout_3.addItem(self.verticalSpacer_2)
 
 
         self.horizontalLayout_5.addWidget(self.frame_2)
@@ -292,7 +303,9 @@ class Ui_MainWindow(object):
         self.label_12.setText(QCoreApplication.translate("MainWindow", u"Coordenada Y", None))
         self.label_13.setText(QCoreApplication.translate("MainWindow", u"Cantidad", None))
         self.button_insert_points.setText(QCoreApplication.translate("MainWindow", u"Insertar", None))
-        self.button_generate_points.setText(QCoreApplication.translate("MainWindow", u"Generar Aleatoriamente", None))
+        self.button_clean.setText(QCoreApplication.translate("MainWindow", u"Limpiar", None))
+        self.button_generate_points.setText(QCoreApplication.translate("MainWindow", u"Generar \n"
+"Aleatoriamente", None))
         self.label_7.setText(QCoreApplication.translate("MainWindow", u"Modificaci\u00f3n de los parametros.", None))
         self.label_2.setText(QCoreApplication.translate("MainWindow", u"Peso 01", None))
         self.label_weight_01.setText(QCoreApplication.translate("MainWindow", u"0", None))
