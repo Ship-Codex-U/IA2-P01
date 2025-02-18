@@ -15,6 +15,8 @@ class MainWindow(QMainWindow):
         self.rangeMinSlider = -25
         self.rangeMaxSlider = 25
 
+        self.zoom_factor = 1.2
+
         self.points = []
 
         self.ui = Ui_MainWindow()
@@ -34,9 +36,30 @@ class MainWindow(QMainWindow):
         self.ui.slider_weight_02.valueChanged.connect(self.change_slider_value)
         self.ui.slider_bias.valueChanged.connect(self.change_slider_value)
 
+        self.canvas.mpl_connect("scroll_event", self.on_scroll)
+
         self.init_plot()
         self.init_sliders()
         self.show()
+    
+    def on_scroll(self, event):
+        xlim = self.ax.get_xlim()
+        ylim = self.ax.get_ylim()
+
+        x_center = (xlim[0] + xlim[1]) / 2
+        y_center = (ylim[0] + ylim[1]) / 2
+
+        if event.step > 0:  # Zoom in
+            scale_factor = 1 / self.zoom_factor
+        else:  # Zoom out
+            scale_factor = self.zoom_factor
+
+        new_xlim = [(x - x_center) * scale_factor + x_center for x in xlim]
+        new_ylim = [(y - y_center) * scale_factor + y_center for y in ylim]
+
+        self.ax.set_xlim(new_xlim)
+        self.ax.set_ylim(new_ylim)
+        self.canvas.draw()
 
     @Slot()
     def click_point_generate(self):
