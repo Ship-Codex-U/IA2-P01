@@ -17,6 +17,5 @@ class Perceptron:
             c = -(self.bias / self.weights[1])
 
             return (m,c)
-        
         else:
             return None
